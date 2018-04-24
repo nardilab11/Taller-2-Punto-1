@@ -1,0 +1,11 @@
+Ciudad 1
+# first street, first avenue, num streets, num avenues showing 
+0 0 10 10
+# intersection size (in pixels) 
+38
+# things
+   becker.robots.Thing 6 5
+   becker.robots.Thing 5 5
+  
+
+# wall

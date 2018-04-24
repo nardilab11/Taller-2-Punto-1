@@ -12,42 +12,29 @@ public class RobotBase
         public static City objetos;
         public static Robot estudiante;
         
-	public static void main (String[] args){
+	public static void main (String[] args) throws InterruptedException{
             //Declarar la creacion de la ciudad
             objetos = new City("Field.txt");
-	    objetos.showThingCounts(true);
+            objetos.showThingCounts(true);
             
             //Direction.NORTH, EAST, SOUTH, WEST
             //Definicion de la ubicacion del robot, Ciudad, posicion, Direccion, Numero things en el bolso.
-            estudiante = new Robot(objetos,0, 2, Direction.EAST,10);
-            
+            estudiante = new Drone(objetos,0, 2, Direction.EAST,10);
+            Flor flor = new Flor(objetos, 0, 3);
+            Semaforo semaforo = new Semaforo(objetos, 0, 6);
 	    //Mover una interseccion en el sentido al cual este apuntando el objeto.
             estudiante.move ();
             
-            //Girar a la izquierda
-            estudiante.turnLeft();
-            
-            //Tomando decisiones, Si puedo tomar un Thing
-            boolean puedeTomar = estudiante.canPickThing();
-            
-            //Tomar un Thing
-            if(puedeTomar == true)
+            Thing t = estudiante.examineThings(new FlorPred()).next();
+            if(t instanceof Flor){
                estudiante.pickThing();
+            }
             
-            //Especifica el numero de Thing que tiene en robot en el bolso
-            int numeroThings = estudiante.countThingsInBackpack();
-            
-            //Poner Thing, se debe validar que tenga things en el bolso
-            estudiante.putThing();
-                       
-            //Si el frente esta libre de Wall
-            estudiante.frontIsClear();
-            
-            //Invocando una funcion
-            creacionFuncion(4);
-            
-            //Toman un Thing
-            estudiante.pickThing();
+            estudiante.move();
+            semaforo.cambiarEstado();
+            Thread.sleep(500);
+            semaforo.cambiarEstado();
+           
             
             
 	}
